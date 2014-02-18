@@ -15,7 +15,7 @@ all: es_main.o
 es_main.o:
 	gcc src/es_main.c -c -I include/ -fpic -o src/es_main.o
 
-install: all 
+install: $(LIB)
 	cp $(LIB) $(libdir)
 	cp src/es_main.h $(headerdir)
 

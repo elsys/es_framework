@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "src/es_main.h"
+#include "es_main.h"
 
 
 int direction_x = 1;

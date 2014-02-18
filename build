@@ -1,1 +1,1 @@
-gcc $1 libes.dylib
+gcc $1 -les -I usr/local/include
