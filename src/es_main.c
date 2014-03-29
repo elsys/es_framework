@@ -63,7 +63,6 @@ void es_p_destroy()
 {   
     SDL_DestroyRenderer( s_renderer );
     SDL_DestroyWindow( s_window );
-
     SDL_Quit();
 }
 
@@ -75,17 +74,17 @@ void es_p_main_loop()
   	while( is_running ) {
         old_time = new_time;
         new_time = SDL_GetTicks();
-        
-		es_p_handle_event();
-		
-    	update_func( (new_time - old_time) / 1000.0 );
+          
+  		es_p_handle_event();
+  		
+      	update_func( (new_time - old_time) / 1000.0 );
 
-		SDL_SetRenderDrawColor(s_renderer, bg_color.r, bg_color.g, bg_color.b, bg_color.a);
-		SDL_RenderClear(s_renderer);
+  		SDL_SetRenderDrawColor(s_renderer, bg_color.r, bg_color.g, bg_color.b, bg_color.a);
+  		SDL_RenderClear(s_renderer);
 
-		render_func();
+  		render_func();
 
-		SDL_RenderPresent(s_renderer);
+  		SDL_RenderPresent(s_renderer);
   	}
 }
 
@@ -95,12 +94,15 @@ void es_p_handle_event()
 	while( SDL_PollEvent( &event ) ) {
 		switch( event.type ) {
 			case SDL_KEYUP:
-				if( event.key.keysym.sym == SDLK_ESCAPE)
-					is_running = 0;
+				if( event.key.keysym.sym == SDLK_ESCAPE) {
+					es_stop();
+        }
 				break;
+      case SDL_QUIT:
+        es_stop();
+        break;
 		}
 	}
-	
 }
 
 void es_stop()
@@ -137,7 +139,7 @@ void es_set_draw_color(int red, int green, int blue)
 	current_color.b = blue;
 }
 
-void es_draw_circle(int x, int y, int radius)
+void es_draw_circle(float x, float y, int radius)
 {
 	filledCircleRGBA( s_renderer, 
 						x, 

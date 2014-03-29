@@ -25,6 +25,6 @@ void es_delay(int seconds);
 void es_set_bgcolor(int red, int green, int blue);
 
 void es_set_draw_color(int red, int green, int blue);
-void es_draw_circle(int x, int y, int radius);
+void es_draw_circle(float x, float y, int radius);
 
 #endif

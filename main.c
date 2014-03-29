@@ -1,12 +1,12 @@
 #include <stdio.h>
-#include "es_main.h"
+#include <es_main.h>
 
 
 int direction_x = 1;
 int direction_y = 1;
 
-int x = 300;
-int y = 300;
+float x = 300;
+float y = 300;
 
 void update(float delta)
 {
@@ -19,7 +19,7 @@ void update(float delta)
 	x += direction_x * delta * 100;
 	y += direction_y * delta * 100;
     
-    printf("%d, %d, %f\n", x, y, delta);
+    printf("%f, %f, %f\n", x, y, delta);
 }
 
 void render()

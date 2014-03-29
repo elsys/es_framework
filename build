@@ -1,1 +1,2 @@
-gcc $1 -les -I usr/local/include
+gcc -g -c $1.c -o $1.o
+gcc -g $1.o -o $1 -les
