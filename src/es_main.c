@@ -19,13 +19,8 @@ static struct color current_color = {0, 0, 0, 255};
 
 static int is_running = 1;
 
-void es_start(char* name,
-	   unsigned int width, 
-	   unsigned int height, 
-	  render_func_t render, 
-	  update_func_t update)
+void es_start(char* name, unsigned int width, unsigned int height)
 {
-	
     if( SDL_Init(SDL_INIT_EVERYTHING) >= 0 ) {
       s_window = SDL_CreateWindow(name, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN );
       
@@ -41,25 +36,24 @@ void es_start(char* name,
     } else {
         //TODO error handling
     }
-  
-    // bg_color.r = 0;
-    // bg_color.g = 0;
-    // bg_color.b = 0;
-    // bg_color.a = 255;
-    //   
-    // current_color.r = 0;
-    // current_color.g = 0;
-    // current_color.b = 0;
-    // current_color.a = 255;
-    //   
+}
+
+void es_start_with_main_loop(char* name,
+	   unsigned int width, 
+	   unsigned int height, 
+	  render_func_t render, 
+	  update_func_t update)
+{    
+    es_start(name, width, height);
+
     render_func = render;
     update_func = update;
 	
 	es_p_main_loop();
-	es_p_destroy();
+	es_destroy();
 }  
 
-void es_p_destroy()
+void es_destroy()
 {   
     SDL_DestroyRenderer( s_renderer );
     SDL_DestroyWindow( s_window );
@@ -88,6 +82,40 @@ void es_p_main_loop()
   	}
 }
 
+void es_start_render()
+{
+		SDL_SetRenderDrawColor(s_renderer, bg_color.r, bg_color.g, bg_color.b, bg_color.a);
+  		SDL_RenderClear(s_renderer);
+}
+
+void es_finish_render()
+{
+    SDL_RenderPresent(s_renderer);
+}
+
+
+//Only checks for ESC pressed and quits
+//returns 1 if ESC is pressed and returns 0 otherwise
+int es_check_quit()
+{
+    SDL_Event event;
+	while( SDL_PollEvent( &event ) ) {
+		switch( event.type ) {
+			case SDL_KEYUP:
+				if( event.key.keysym.sym == SDLK_ESCAPE) {
+					return 1;
+        }
+				break;
+      case SDL_QUIT:
+        return 1;
+        break;
+		}
+	}
+
+    return 0;
+}
+
+//TODO: come up with idea for checking for different keypresses
 void es_p_handle_event()
 {
 	SDL_Event event;
@@ -95,17 +123,17 @@ void es_p_handle_event()
 		switch( event.type ) {
 			case SDL_KEYUP:
 				if( event.key.keysym.sym == SDLK_ESCAPE) {
-					es_stop();
+					es_stop_main_loop();
         }
 				break;
       case SDL_QUIT:
-        es_stop();
+        es_stop_main_loop();
         break;
 		}
 	}
 }
 
-void es_stop()
+void es_stop_main_loop()
 {
 	is_running = 0;
 }

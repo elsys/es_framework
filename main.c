@@ -27,13 +27,34 @@ void render()
 	es_draw_circle(x, y, 10);
 }
 
-int main()
+int second_main()
 {
     es_set_bgcolor(0, 0, 255);
     es_set_draw_color(255, 255, 255);
 	
 	char str[] = "Test";
-	es_start(str, 640, 480, render, update);
+	es_start_with_main_loop(str, 640, 480, render, update);
   
   return 0;
+}
+
+
+int main()
+{
+    es_set_bgcolor(0, 0, 255);
+    es_set_draw_color(255, 255, 255);
+
+    char str[] = "Test 2";
+    es_start(str, 640, 480);
+
+    es_start_render();
+
+    es_draw_circle(100, 100, 10);
+
+    es_finish_render();
+
+    es_delay(2000);
+
+    es_destroy();
+    return 0;
 }

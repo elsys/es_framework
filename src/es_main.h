@@ -12,13 +12,23 @@ struct color
 typedef void (*update_func_t) (float delta);
 typedef void (*render_func_t) ();
 
-void es_start(char* name,
+void es_start_with_main_loop(char* name,
 	   unsigned int width, 
 	   unsigned int height, 
 	  render_func_t render, 
 	  update_func_t update);
 
-void es_stop();
+void es_start(char* name, unsigned int width, unsigned int height);
+
+
+void es_start_render();
+void es_finish_render();
+
+void es_destroy();
+
+int es_check_quit();
+
+void es_stop_main_loop();
 
 void es_delay(int seconds);
 
