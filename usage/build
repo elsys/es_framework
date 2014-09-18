@@ -1,0 +1,2 @@
+gcc -g -c $1.c -o $1.o -I/usr/local/include
+gcc -g $1.o -o $1 -L/usr/local/lib -les
